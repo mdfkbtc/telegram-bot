@@ -32,7 +32,7 @@ var (
 	debug   bool
 	token   string
 	metrics int
-	market
+
 	runCmd = &cobra.Command{
 		Use:   "run",
 		Short: "Run coinpaprika bot",
