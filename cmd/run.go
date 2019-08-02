@@ -204,7 +204,7 @@ func commandAthPrice(argument string) (string, error) {
 		return "", errors.Wrap(errors.New("missing data"), "command /a")
 	}
 
-	return fmt.Sprintf("%s ATH was %.2f USD, %.8f BTC \n %s \n down since ath %.2f %", *ticker.Name, *athUSD, *athBTC, *athDate, *downFromAth), nil
+	return fmt.Sprintf("%s ATH was %.2f USD, %.8f BTC \n %s \n down since ath %.2f percent", *ticker.Name, *athUSD, *athBTC, *athDate, *downFromAth), nil
 }
 
 func commandSupply(argument string) (string, error) {
