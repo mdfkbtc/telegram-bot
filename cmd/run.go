@@ -99,15 +99,15 @@ func run() error {
 			/s <symbol> 		check the circulating supply
 			/v <symbol> 		check the 24h volume
 
-			/author 			check orginal author repository
-			/source 			show source code of this bot
 			`
 			log.Debugf("received command: %s", u.Message.Command())
 			switch u.Message.Command() {
+			/*
 			case "author":
 				text = "https://github.com/coinpaprika/telegram-bot"
 			case "source":
 				text = "https://github.com/velescore/telegram-bot"
+			*/
 			case "p":
 				if text, err = commandPrice(u.Message.CommandArguments()); err != nil {
 					text = "invalid coin name|ticker|symbol, please try again"
