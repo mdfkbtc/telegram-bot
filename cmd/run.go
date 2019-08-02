@@ -169,12 +169,11 @@ func commandMarketCap(argument string) (string, error) {
 	}
 
 	marketCapUSD := ticker.Quotes["USD"].MarketCap
-	marketCapBTC := ticker.Quotes["BTC"].MarketCap
-	if ticker.Name == nil || ticker.ID == nil || marketCapUSD == nil || marketCapBTC == nil {
+	if ticker.Name == nil || ticker.ID == nil || marketCapUSD == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /m")
 	}
 
-	return fmt.Sprintf("%s marketcap: %.8f USD, %.8f BTC", *ticker.Name, *marketCapUSD, *marketCapBTC, *ticker.ID), nil
+	return fmt.Sprintf("%s marketcap: %.8f USD, %.8f BTC", *ticker.Name, *marketCapUSD, *ticker.ID), nil
 }
 
 func commandSupply(argument string) (string, error) {
