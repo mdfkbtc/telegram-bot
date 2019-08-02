@@ -174,7 +174,7 @@ func commandMarketCap(argument string) (string, error) {
 		return "", errors.Wrap(err, "command /m")
 	}
 
-	marketCap := ticker.Quotes.["USD"]MarketCap
+	marketCap := ticker.Quotes["USD"].MarketCap
 	if ticker.Name == nil || ticker.ID == nil || marketCap == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /m")
 	}
