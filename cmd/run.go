@@ -179,7 +179,7 @@ func commandMarketCap(argument string) (string, error) {
 		return "", errors.Wrap(errors.New("missing data"), "command /m")
 	}
 
-	return fmt.Sprintf("%s marketcap: %.8f USD" *ticker.Name, *marketCap, *ticker.ID), nil
+	return fmt.Sprintf("%s marketcap: %.8f USD", *ticker.Name, *marketCap, *ticker.ID), nil
 }
 
 func commandSupply(argument string) (string, error) {
