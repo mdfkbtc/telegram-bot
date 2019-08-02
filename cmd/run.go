@@ -32,7 +32,7 @@ var (
 	debug   bool
 	token   string
 	metrics int
-
+	market
 	runCmd = &cobra.Command{
 		Use:   "run",
 		Short: "Run coinpaprika bot",
@@ -187,7 +187,7 @@ func commandMarkets(argument string) (string, error) {
 		return "", errors.Wrap(errors.New("missing data"), "command /e")
 	}
 
-	return fmt.Sprintf("%s is trading on: %d \n\n http://coinpaprika.com/coin/%s/markets", *market.ExchangeName, *market.Pair, *market.ReportedVolume24hShare ), nil
+	return fmt.Sprintf("%s is trading on: %d \n\n http://coinpaprika.com/coin/%s/markets", *ExchangeName, *Pair, *ReportedVolume24hShare ), nil
 }
 
 func commandVolume(argument string) (string, error) {
