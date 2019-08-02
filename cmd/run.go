@@ -169,7 +169,7 @@ func commandPrice(argument string) (string, error) {
 		return "", errors.Wrap(errors.New("missing data"), "command /p")
 	}
 
-	return fmt.Sprintf("%s price: \n\n http://coinpaprika.com/coin/%s", *ticker.Name, *priceUSD, *priceBTC, *ticker.ID), nil
+	return fmt.Sprintf("%s price: %.8f USD %.8f BTC \n\n http://coinpaprika.com/coin/%s", *ticker.Name, *priceUSD, *priceBTC, *ticker.ID), nil
 }
 
 func commandMarketCap(argument string) (string, error) {
