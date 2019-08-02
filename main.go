@@ -14,7 +14,7 @@
 
 package main
 
-import "github.com/coinpaprika/telegram-bot/cmd"
+import "github.com/mdfkbtc/telegram-bot/cmd"
 
 var (
 	version = "dev"

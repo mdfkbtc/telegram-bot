@@ -19,7 +19,7 @@ import (
 	"net/http"
 
 	"github.com/coinpaprika/coinpaprika-api-go-client/coinpaprika"
-	"github.com/coinpaprika/telegram-bot/telegram"
+	"github.com/mdfkbtc/telegram-bot/telegram"
 	"github.com/pkg/errors"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -43,7 +43,7 @@ var (
 	}
 
 	commandsProcessed = prometheus.NewCounter(prometheus.CounterOpts{
-		Namespace: "coinpaprika",
+		Namespace: "velescore",
 		Subsystem: "telegram_bot",
 		Name:      "commands_proccessed",
 		Help:      "The total number of processed commands",
@@ -98,13 +98,17 @@ func run() error {
 			/p <symbol> 		check the coin price
 			/s <symbol> 		check the circulating supply
 			/v <symbol> 		check the 24h volume
+			/e <symbol>			check available Exchanges
 
+			/author 			check orginal author repository
 			/source 			show source code of this bot
 			`
 			log.Debugf("received command: %s", u.Message.Command())
 			switch u.Message.Command() {
-			case "source":
+			case "author":
 				text = "https://github.com/coinpaprika/telegram-bot"
+			case "source":
+				text = "https://github.com/velescore/telegram-bot"
 			case "p":
 				if text, err = commandPrice(u.Message.CommandArguments()); err != nil {
 					text = "invalid coin name|ticker|symbol, please try again"
@@ -170,6 +174,21 @@ func commandSupply(argument string) (string, error) {
 	}
 
 	return fmt.Sprintf("%s circulating supply: %d \n\n http://coinpaprika.com/coin/%s", *ticker.Name, *ticker.CirculatingSupply, *ticker.ID), nil
+}
+
+func commandExchanges(argument string) (string, error) {
+	log.Debugf("processing command /e with argument :%s", argument)
+
+	ticker, err := getTickerByQuery(argument)
+	if err != nil {
+		return "", errors.Wrap(err, "command /e")
+	}
+
+	if ticker.Name == nil || ticker.ID == nil || ticker.Exchanges == nil {
+		return "", errors.Wrap(errors.New("missing data"), "command /e")
+	}
+
+	return fmt.Sprintf("%s is trading on: %d \n\n http://coinpaprika.com/coin/%s/markets", *ticker.ExchangeName, *ticker.Pair, *ticker.ID), nil
 }
 
 func commandVolume(argument string) (string, error) {
