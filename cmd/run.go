@@ -160,6 +160,23 @@ func commandPrice(argument string) (string, error) {
 	return fmt.Sprintf("%s price: %.8f USD, %.8f BTC \n\n http://coinpaprika.com/coin/%s", *ticker.Name, *priceUSD, *priceBTC, *ticker.ID), nil
 }
 
+func commandMarketCap(argument string) (string, error) {
+	log.Debugf("processing command /m with argument :%s", argument)
+
+	ticker, err := getTickerByQuery(argument)
+	if err != nil {
+		return "", errors.Wrap(err, "command /m")
+	}
+
+	marketCapUSD := ticker.Quotes["USD"].MarketCap
+	marketCapBTC := ticker.Quotes["BTC"].MarketCap
+	if ticker.Name == nil || ticker.ID == nil || marketCapUSD == nil || marketCapBTC == nil {
+		return "", errors.Wrap(errors.New("missing data"), "command /p")
+	}
+
+	return fmt.Sprintf("%s marketcap: %.8f USD, %.8f BTC", *ticker.Name, *marketCapUSD, marketCapBTC, *ticker.ID), nil
+}
+
 func commandSupply(argument string) (string, error) {
 	log.Debugf("processing command /s with argument :%s", argument)
 
@@ -188,7 +205,7 @@ func commandMarkets(argument string) (string, error) {
 		return "", errors.Wrap(errors.New("missing data"), "command /e")
 	}
 
-	return fmt.Sprintf("%s is trading on: %d \n\n http://coinpaprika.com/coin/%s/markets", market*ExchangeName, market*Pair, market*ReportedVolume24hShare ), nil
+	return fmt.Sprintf("%s is trading on: %d \n\n http://coinpaprika.com/coin/%s", market*ExchangeName, market*Pair, market*ReportedVolume24hShare ), nil
 }
 */
 func commandVolume(argument string) (string, error) {
