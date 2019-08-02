@@ -92,20 +92,7 @@ func run() error {
 			}
 			commandsProcessed.Inc()
 
-			text := `____   ____     .__
-			\   \ /   /____ |  |   ____   ______
-			 \   Y   // __ \|  | _/ __ \ /  ___/
-			  \     /\  ___/|  |_\  ___/ \___ \
-			   \___/  \___  >____/\___  >____  >
-			              \/          \/     \/
-			             .__            ___.           __
-			_____________|__| ____  ____\_ |__   _____/  |_
-			\____ \_  __ \  |/ ___\/ __ \| __ \ /  _ \   __\
-			|  |_> >  | \/  \  \__\  ___/| \_\ (  <_> )  |
-			|   __/|__|  |__|\___  >___  >___  /\____/|__|
-			|__|                 \/    \/    \/             
-
-			Please use one of the commands:
+			text := `Please use one of the commands:
 
 			/h or /help 	  display the help message
 			/p <symbol> 		information about coin price
@@ -150,7 +137,7 @@ func run() error {
 					log.Error(err)
 				}
 			case "c":
-				if text, err = commandAthPrice(u.Message.CommandArguments()); err != nil {
+				if text, err = commandPriceChange(u.Message.CommandArguments()); err != nil {
 					text = "invalid coin name|ticker|symbol, please try again"
 					log.Error(err)
 				}
@@ -224,7 +211,7 @@ func commandAthPrice(argument string) (string, error) {
 		return "", errors.Wrap(errors.New("missing data"), "command /a")
 	}
 
-	return fmt.Sprintf("%s ATH infomation \n  %s \n %.2f USD,\n %.8f BTC \n Down since ATH: %.2f percent", *ticker.Name, *athDate, *athUSD, *athBTC, *downFromAth), nil
+	return fmt.Sprintf("%s ATH infomation \n %s \n %.2f USD,\n %.8f BTC \n Down since ATH: %.2f percent", *ticker.Name, *athDate, *athUSD, *athBTC, *downFromAth), nil
 }
 
 func commandSupply(argument string) (string, error) {
