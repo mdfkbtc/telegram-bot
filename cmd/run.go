@@ -278,12 +278,11 @@ func commandVolume(argument string) (string, error) {
 	}
 
 	volumeUSD := ticker.Quotes["USD"].Volume24h
-	volumeBTC := ticker.Quotes["BTC"].Volume24h
-	if ticker.Name == nil || ticker.ID == nil || volumeUSD == nil || volumeBTC == nil {
+	if ticker.Name == nil || ticker.ID == nil || volumeUSD == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /v")
 	}
 
-	return fmt.Sprintf("%s 24h volume: %.2f USD \n %s 24h volume: %.3f USD", *ticker.Name, *volumeUSD, *ticker.Name, *ticker.volumeBTC), nil
+	return fmt.Sprintf("%s 24h volume: %.2f USD", *ticker.Name, *volumeUSD), nil
 }
 
 func getTickerByQuery(query string) (*coinpaprika.Ticker, error) {
