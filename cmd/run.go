@@ -174,7 +174,7 @@ func commandSupply(argument string) (string, error) {
 
 	return fmt.Sprintf("%s circulating supply: %d \n\n http://coinpaprika.com/coin/%s", *ticker.Name, *ticker.CirculatingSupply, *ticker.ID), nil
 }
-
+/*
 func commandMarkets(argument string) (string, error) {
 	log.Debugf("processing command /e with argument :%s", argument)
 
@@ -190,7 +190,7 @@ func commandMarkets(argument string) (string, error) {
 
 	return fmt.Sprintf("%s is trading on: %d \n\n http://coinpaprika.com/coin/%s/markets", market*ExchangeName, market*Pair, market*ReportedVolume24hShare ), nil
 }
-
+*/
 func commandVolume(argument string) (string, error) {
 	log.Debugf("processing command /v with argument :%s", argument)
 
