@@ -198,8 +198,8 @@ func commandAthPrice(argument string) (string, error) {
 
 	athUSD := ticker.Quotes["USD"].ATHPrice
 	athBTC := ticker.Quotes["BTC"].ATHPrice
-	athDate := ticker.Quotes.ATHDate
-	downFromAth := ticker.Quotes.PercentFromPriceATH
+	athDate := ticker.Quotes[""].ATHDate
+	downFromAth := ticker.Quotes.["%"]PercentFromPriceATH
 	if ticker.Name == nil || ticker.ID == nil || athUSD == nil || athBTC == nil || athDate == nil || downFromAth == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /a")
 	}
