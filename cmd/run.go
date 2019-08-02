@@ -98,7 +98,6 @@ func run() error {
 			/p <symbol> 		check the coin price
 			/s <symbol> 		check the circulating supply
 			/v <symbol> 		check the 24h volume
-			/e <symbol>			check available Exchanges
 
 			/author 			check orginal author repository
 			/source 			show source code of this bot
@@ -175,7 +174,7 @@ func commandSupply(argument string) (string, error) {
 
 	return fmt.Sprintf("%s circulating supply: %d \n\n http://coinpaprika.com/coin/%s", *ticker.Name, *ticker.CirculatingSupply, *ticker.ID), nil
 }
-
+/*
 func commandExchanges(argument string) (string, error) {
 	log.Debugf("processing command /e with argument :%s", argument)
 
@@ -190,7 +189,7 @@ func commandExchanges(argument string) (string, error) {
 
 	return fmt.Sprintf("%s is trading on: %d \n\n http://coinpaprika.com/coin/%s/markets", *ticker.ExchangeName, *ticker.Pair, *ticker.ID), nil
 }
-
+*/
 func commandVolume(argument string) (string, error) {
 	log.Debugf("processing command /v with argument :%s", argument)
 
