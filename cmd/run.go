@@ -182,7 +182,7 @@ func commandMarketCap(argument string) (string, error) {
 
 	marketCapUSD := ticker.Quotes["USD"].MarketCap
 	marketCapBTC := ticker.Quotes["BTC"].MarketCap
-	if ticker.Name == nil || ticker.ID == nil || marketCap == nil {
+	if ticker.Name == nil || ticker.ID == nil || marketCapUSD == nil || marketCapBTC == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /m")
 	}
 
