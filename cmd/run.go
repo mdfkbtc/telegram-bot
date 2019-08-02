@@ -1,4 +1,4 @@
-// Copyright © 2018 coinpaprika.com
+priceChange// Copyright © 2018 coinpaprika.com
 //
 // Licensed under the Apache License, version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -94,12 +94,13 @@ func run() error {
 
 			text := `Please use one of the commands:
 
-			/start or /help 	show this message
-			/p <symbol> 		check the coin price
+			/h or /help 	  display the help message
+			/p <symbol> 		information about coin price
 			/s <symbol> 		information about supply
-			/v <symbol> 		check the 24h volume
-			/m <symbol> 		check the marketcap
+			/v <symbol> 		information about 24h volume
+			/m <symbol> 		infomation about marketcap
 			/a <symbol>			information about ATH
+			/c <symbol> 		information about price change
 
 			`
 			log.Debugf("received command: %s", u.Message.Command())
@@ -131,6 +132,11 @@ func run() error {
 					log.Error(err)
 				}
 			case "a":
+				if text, err = commandAthPrice(u.Message.CommandArguments()); err != nil {
+					text = "invalid coin name|ticker|symbol, please try again"
+					log.Error(err)
+				}
+			case "c":
 				if text, err = commandAthPrice(u.Message.CommandArguments()); err != nil {
 					text = "invalid coin name|ticker|symbol, please try again"
 					log.Error(err)
@@ -182,7 +188,7 @@ func commandMarketCap(argument string) (string, error) {
 
 	marketCapUSD := ticker.Quotes["USD"].MarketCap
 	marketCapBTC := ticker.Quotes["BTC"].MarketCap
-	if ticker.Name == nil || ticker.ID == nil || marketCapUSD == nil || marketCapBTC == nil {
+	if ticker.Name == nil || marketCapUSD == nil || marketCapBTC == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /m")
 	}
 
@@ -201,11 +207,11 @@ func commandAthPrice(argument string) (string, error) {
 	athBTC := ticker.Quotes["BTC"].ATHPrice
 	downFromAth := ticker.Quotes["USD"].PercentFromPriceATH
 	athDate := ticker.Quotes["USD"].ATHDate
-	if ticker.Name == nil || ticker.ID == nil || athUSD == nil || athBTC == nil || athDate == nil || downFromAth == nil {
+	if ticker.Name == nil || athUSD == nil || athBTC == nil || athDate == nil || downFromAth == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /a")
 	}
 
-	return fmt.Sprintf("%s ATH infomation \n %.2f USD,\n %.8f BTC  %s \n Down since ath: %.2f percent", *ticker.Name, *athUSD, *athBTC, *athDate, *downFromAth), nil
+	return fmt.Sprintf("%s ATH infomation \n  %s \n %.2f USD,\n %.8f BTC \n Down since ATH: %.2f percent", *ticker.Name, *athDate, *athUSD, *athBTC, *downFromAth), nil
 }
 
 func commandSupply(argument string) (string, error) {
@@ -216,7 +222,7 @@ func commandSupply(argument string) (string, error) {
 		return "", errors.Wrap(err, "command /s")
 	}
 
-	if ticker.Name == nil || ticker.ID == nil || ticker.MaxSupply == nil || ticker.TotalSupply == nil || ticker.CirculatingSupply == nil {
+	if ticker.Name == nil || ticker.MaxSupply == nil || ticker.TotalSupply == nil  || ticker.CirculatingSupply == nil || ticker.Symbol == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /s")
 	}
 
@@ -240,6 +246,29 @@ func commandMarkets(argument string) (string, error) {
 	return fmt.Sprintf("%s is trading on: %d \n\n http://coinpaprika.com/coin/%s", market*ExchangeName, market*Pair, market*ReportedVolume24hShare ), nil
 }
 */
+func commandPriceChange(argument string) (string, error) {
+	log.Debugf("processing command /c with argument :%s", argument)
+
+	ticker, err := getTickerByQuery(argument)
+	if err != nil {
+		return "", errors.Wrap(err, "command /c")
+	}
+
+	priceChange1h := ticker.Quotes["USD"].PercentChange1h
+	priceChange12h := ticker.Quotes["USD"].PercentChange12h
+	priceChange24h := ticker.Quotes["USD"].PercentChange24h
+	priceChange7d := ticker.Quotes["USD"].PercentChange7d
+	priceChange30d := ticker.Quotes["USD"].PercentChange30d
+	priceChange1y := ticker.Quotes["USD"].PercentChange1y
+	if ticker.Name == nil || priceChange1h == nil || priceChange12h == nil || priceChange24h == nil {
+		return "", errors.Wrap(errors.New("missing data"), "command /c")
+	}
+
+	return fmt.Sprintf("%s price change \n 1h change: %.2f percent \n 12h change: %.2f percent \n 24h change: %.2f percent
+		 \n 7d change: %.2f percent \n 30d change: %.2f \n 1y change: %.2f",
+		 *ticker.Name, *priceChange1h, *priceChange12h, *priceChange24h, *priceChange7d, *priceChange30d, *priceChange1y), nil
+}
+
 func commandVolume(argument string) (string, error) {
 	log.Debugf("processing command /v with argument :%s", argument)
 
@@ -249,11 +278,12 @@ func commandVolume(argument string) (string, error) {
 	}
 
 	volumeUSD := ticker.Quotes["USD"].Volume24h
-	if ticker.Name == nil || ticker.ID == nil || volumeUSD == nil {
+	volumeBTC := ticker.Quotes["BTC"].Volume24h
+	if ticker.Name == nil || ticker.ID == nil || volumeUSD == nil || volumeBTC == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /v")
 	}
 
-	return fmt.Sprintf("%s 24h volume: %.2f USD \n\n http://coinpaprika.com/coin/%s", *ticker.Name, *volumeUSD, *ticker.ID), nil
+	return fmt.Sprintf("%s 24h volume: %.2f USD \n %s 24h volume: %.3f USD", *ticker.Name, *volumeUSD, *ticker.Name, *ticker.volumeBTC), nil
 }
 
 func getTickerByQuery(query string) (*coinpaprika.Ticker, error) {
