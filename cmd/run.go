@@ -197,14 +197,13 @@ func commandAthPrice(argument string) (string, error) {
 	}
 
 	athUSD := ticker.Quotes["USD"].ATHPrice
-	/*athBTC := ticker.Quotes["BTC"].ATHPrice
-	downFromAth := ticker.Quotes[""].PercentFromPriceATH*/
-	athDate := ticker.Quotes[""].ATHDate
-	if ticker.Name == nil || ticker.ID == nil || athUSD == nil || athDate == nil/*|| athBTC == nil  || downFromAth == nil*/ {
+	downFromAth := ticker.Quotes["USD"].PercentFromPriceATH
+	athDate := ticker.Quotes["USD"].ATHDate
+	if ticker.Name == nil || ticker.ID == nil || athUSD == nil || athDate == nil || downFromAth == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /a")
 	}
 
-	return fmt.Sprintf("%s ATH was %.2f , %s ", *ticker.Name, *athUSD, *athDate/*, *athBTC, *downFromAth*/), nil
+	return fmt.Sprintf("%s ATH was %.2f , %s \n down since ath %.2f", *ticker.Name, *athUSD, *athDate, *downFromAth), nil
 }
 
 func commandSupply(argument string) (string, error) {
