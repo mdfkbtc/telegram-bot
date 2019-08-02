@@ -98,6 +98,7 @@ func run() error {
 			/p <symbol> 		check the coin price
 			/s <symbol> 		check the circulating supply
 			/v <symbol> 		check the 24h volume
+			/m <symbol> 		check the marketcap
 
 			`
 			log.Debugf("received command: %s", u.Message.Command())
@@ -120,6 +121,11 @@ func run() error {
 				}
 			case "v":
 				if text, err = commandVolume(u.Message.CommandArguments()); err != nil {
+					text = "invalid coin name|ticker|symbol, please try again"
+					log.Error(err)
+				}
+			case "m":
+				if text, err = commandMarketCap(u.Message.CommandArguments()); err != nil {
 					text = "invalid coin name|ticker|symbol, please try again"
 					log.Error(err)
 				}
