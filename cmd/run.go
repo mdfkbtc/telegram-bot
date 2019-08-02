@@ -264,8 +264,13 @@ func commandPriceChange(argument string) (string, error) {
 		return "", errors.Wrap(errors.New("missing data"), "command /c")
 	}
 
-	return fmt.Sprintf(`"%s price change \n 1h change: %.2f percent \n 12h change: %.2f percent \n 24h change: %.2f percent
-		 \n 7d change: %.2f percent \n 30d change: %.2f \n 1y change: %.2f"`,
+	return fmt.Sprintf(`%s price change
+		 1h change: %.2f percent
+		 12h change: %.2f percent
+		 24h change: %.2f percent
+		 7d change: %.2f percent
+		 30d change: %.2f
+		 1y change: %.2f`,
 		 *ticker.Name, *priceChange1h, *priceChange12h, *priceChange24h, *priceChange7d, *priceChange30d, *priceChange1y), nil
 }
 
