@@ -131,7 +131,7 @@ func run() error {
 					log.Error(err)
 				}
 			case "a":
-				if text, err = commandMarketCap(u.Message.CommandArguments()); err != nil {
+				if text, err = commandAthPrice(u.Message.CommandArguments()); err != nil {
 					text = "invalid coin name|ticker|symbol, please try again"
 					log.Error(err)
 				}
