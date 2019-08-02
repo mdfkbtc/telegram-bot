@@ -99,6 +99,7 @@ func run() error {
 			/s <symbol> 		check the circulating supply
 			/v <symbol> 		check the 24h volume
 			/m <symbol> 		check the marketcap
+			/a <symbol>			information about ATH
 
 			`
 			log.Debugf("received command: %s", u.Message.Command())
@@ -125,6 +126,11 @@ func run() error {
 					log.Error(err)
 				}
 			case "m":
+				if text, err = commandMarketCap(u.Message.CommandArguments()); err != nil {
+					text = "invalid coin name|ticker|symbol, please try again"
+					log.Error(err)
+				}
+			case "a":
 				if text, err = commandMarketCap(u.Message.CommandArguments()); err != nil {
 					text = "invalid coin name|ticker|symbol, please try again"
 					log.Error(err)
@@ -163,7 +169,7 @@ func commandPrice(argument string) (string, error) {
 		return "", errors.Wrap(errors.New("missing data"), "command /p")
 	}
 
-	return fmt.Sprintf("%s price: %.8f USD, %.8f BTC \n\n http://coinpaprika.com/coin/%s", *ticker.Name, *priceUSD, *priceBTC, *ticker.ID), nil
+	return fmt.Sprintf("%s price: \n\n http://coinpaprika.com/coin/%s", *ticker.Name, *priceUSD, *priceBTC, *ticker.ID), nil
 }
 
 func commandMarketCap(argument string) (string, error) {
@@ -179,7 +185,26 @@ func commandMarketCap(argument string) (string, error) {
 		return "", errors.Wrap(errors.New("missing data"), "command /m")
 	}
 
-	return fmt.Sprintf("%s marketcap: %.8f USD", *ticker.Name, *marketCap), nil
+	return fmt.Sprintf("%s marketcap is %.8f USD", *ticker.Name, *marketCap), nil
+}
+
+func commandAthPrice(argument string) (string, error) {
+	log.Debugf("processing command /a with argument :%s", argument)
+
+	ticker, err := getTickerByQuery(argument)
+	if err != nil {
+		return "", errors.Wrap(err, "command /a")
+	}
+
+	athUSD := ticker.Quotes["USD"].ATHPrice
+	athBTC := ticker.Quotes["BTC"].ATHPrice
+	athDate := ticker.Quotes.ATHDate
+	downFromAth := ticker.Quotes.PercentFromPriceATH
+	if ticker.Name == nil || ticker.ID == nil || athUSD == nil || athBTC == nil || athDate == nil || downFromAth == nil {
+		return "", errors.Wrap(errors.New("missing data"), "command /a")
+	}
+
+	return fmt.Sprintf("%s ATH was %.2f USD, %.8f BTC %s \n Now is %.2f percent down from ATH", *ticker.Name, *athUSD, *athBTC, *athDate, *downFromAth), nil
 }
 
 func commandSupply(argument string) (string, error) {
