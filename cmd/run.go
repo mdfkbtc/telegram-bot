@@ -92,7 +92,20 @@ func run() error {
 			}
 			commandsProcessed.Inc()
 
-			text := `Please use one of the commands:
+			text := `____   ____     .__
+			\   \ /   /____ |  |   ____   ______
+			 \   Y   // __ \|  | _/ __ \ /  ___/
+			  \     /\  ___/|  |_\  ___/ \___ \
+			   \___/  \___  >____/\___  >____  >
+			              \/          \/     \/
+			             .__            ___.           __
+			_____________|__| ____  ____\_ |__   _____/  |_
+			\____ \_  __ \  |/ ___\/ __ \| __ \ /  _ \   __\
+			|  |_> >  | \/  \  \__\  ___/| \_\ (  <_> )  |
+			|   __/|__|  |__|\___  >___  >___  /\____/|__|
+			|__|                 \/    \/    \/             
+
+			Please use one of the commands:
 
 			/h or /help 	  display the help message
 			/p <symbol> 		information about coin price
