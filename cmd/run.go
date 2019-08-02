@@ -174,8 +174,8 @@ func commandSupply(argument string) (string, error) {
 
 	return fmt.Sprintf("%s circulating supply: %d \n\n http://coinpaprika.com/coin/%s", *ticker.Name, *ticker.CirculatingSupply, *ticker.ID), nil
 }
-/*
-func commandExchanges(argument string) (string, error) {
+
+func commandMarkets(argument string) (string, error) {
 	log.Debugf("processing command /e with argument :%s", argument)
 
 	ticker, err := getTickerByQuery(argument)
@@ -183,13 +183,13 @@ func commandExchanges(argument string) (string, error) {
 		return "", errors.Wrap(err, "command /e")
 	}
 
-	if ticker.Name == nil || ticker.ID == nil || ticker.Exchanges == nil {
+	if ticker.Name == nil || ticker.ID == nil || ticker.Market == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /e")
 	}
 
-	return fmt.Sprintf("%s is trading on: %d \n\n http://coinpaprika.com/coin/%s/markets", *ticker.ExchangeName, *ticker.Pair, *ticker.ID), nil
+	return fmt.Sprintf("%s is trading on: %d \n\n http://coinpaprika.com/coin/%s/markets", *ticker.ExchangeName, *ticker.Pair, *ticker.ReportedVolume24hShare ), nil
 }
-*/
+
 func commandVolume(argument string) (string, error) {
 	log.Debugf("processing command /v with argument :%s", argument)
 
