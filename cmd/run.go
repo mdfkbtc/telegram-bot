@@ -225,7 +225,7 @@ func commandAthPrice(argument string) (string, error) {
 		%s
 		 %.4f USD
 		 %.8f BTC
-		Down since ATH %.2f %`,
+		Down since ATH %.2f %%`,
 		*ticker.Name, *athDate, *athUSD, *athBTC, *downFromAth), nil
 }
 
@@ -283,12 +283,12 @@ func commandPriceChange(argument string) (string, error) {
 	}
 
 	return fmt.Sprintf(`%s price change:
-		 1h change: %.2f %
-		 12h change: %.2f %
-		 24h change: %.2f %
-		 7d change: %.2f %
-		 30d change: %.2f %
-		 1y change: %.2f %`,
+		 1h change: %.2f %%
+		 12h change: %.2f %%
+		 24h change: %.2f %%
+		 7d change: %.2f %%
+		 30d change: %.2f %%
+		 1y change: %.2f %%`,
 		 *ticker.Name, *priceChange1h, *priceChange12h, *priceChange24h, *priceChange7d, *priceChange30d, *priceChange1y), nil
 }
 /*
