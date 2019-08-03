@@ -177,13 +177,13 @@ func commandPrice(argument string) (string, error) {
 	}
 
 	return fmt.Sprintf(`%s price:
-		 %.4f USD
-		 %.8f BTC
+		 %.4f $
+		 %.8f ₿
 	%s marketcap:
-		 %.f USD
-		 %.f BTC
+		 %.f $
+		 %.f ₿
 	%s volume:
-		 %.f USD
+		 %.f $
   http://coinpaprika.com/coin/%s`,
 		*ticker.Name, *priceUSD, *priceBTC, *ticker.Symbol, *marketCapUSD, *marketCapBTC, *ticker.Symbol, *volumeUSD, *ticker.ID), nil
 }
@@ -222,10 +222,10 @@ func commandAthPrice(argument string) (string, error) {
 	}
 
 	return fmt.Sprintf(`%s ATH info:
-		 %.4f USD
-		 %.8f BTC
-	%s
-	Down since ATH %.2f %%`,
+		 %.4f $
+		 %.8f ₿
+		 %s
+		 Down since ATH %.2f %%`,
 		*ticker.Name, *athUSD, *athBTC, *athDate, *downFromAth), nil
 }
 
@@ -283,12 +283,12 @@ func commandPriceChange(argument string) (string, error) {
 	}
 
 	return fmt.Sprintf(`%s price change:
-		 1h %.2f %%
-		 12h %.2f %%
-		 24h %.2f %%
-		 7d %.2f %%
-		 30d %.2f %%
-		 1y %.2f %%`,
+		 1h:  %.2f %%
+		 12h:  %.2f %%
+		 24h:  %.2f %%
+		 7d:  %.2f %%
+		 30d:  %.2f %%
+		 1y:  %.2f %%`,
 		 *ticker.Name, *priceChange1h, *priceChange12h, *priceChange24h, *priceChange7d, *priceChange30d, *priceChange1y), nil
 }
 /*
