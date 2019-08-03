@@ -172,7 +172,7 @@ func commandPrice(argument string) (string, error) {
 	volumeUSD := ticker.Quotes["USD"].Volume24h
 	marketCapUSD := ticker.Quotes["USD"].MarketCap
 	marketCapBTC := ticker.Quotes["BTC"].MarketCap
-	if ticker.Symbol == nil || ticker.ID == nil || priceUSD == nil || priceBTC == nil || volumeUSD == nil || marketCapUSD == nil || marketCapBTC == nil {
+	if ticker.Name == nil || ticker.ID == nil || priceUSD == nil || priceBTC == nil || volumeUSD == nil || marketCapUSD == nil || marketCapBTC == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /p")
 	}
 
@@ -185,7 +185,7 @@ func commandPrice(argument string) (string, error) {
 	  %s volume:
 		 %.f USD
 		http://coinpaprika.com/coin/%s`,
-		*ticker.Symbol, *priceUSD, *priceBTC, *ticker.Symbol, *marketCapUSD, *marketCapBTC, *ticker.Symbol, *volumeUSD, *ticker.ID), nil
+		*ticker.Name, *priceUSD, *priceBTC, *ticker.Symbol, *marketCapUSD, *marketCapBTC, *ticker.Symbol, *volumeUSD, *ticker.ID), nil
 }
 /*
 func commandMarketCap(argument string) (string, error) {
@@ -217,7 +217,7 @@ func commandAthPrice(argument string) (string, error) {
 	athBTC := ticker.Quotes["BTC"].ATHPrice
 	downFromAth := ticker.Quotes["USD"].PercentFromPriceATH
 	athDate := ticker.Quotes["USD"].ATHDate
-	if ticker.Symbol == nil || athUSD == nil || athBTC == nil || athDate == nil || downFromAth == nil {
+	if ticker.Name == nil || athUSD == nil || athBTC == nil || athDate == nil || downFromAth == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /a")
 	}
 
@@ -226,7 +226,7 @@ func commandAthPrice(argument string) (string, error) {
 		 %.4f USD
 		 %.8f BTC
 		Down since ATH %.2f "%"`,
-		*ticker.Symbol, *athDate, *athUSD, *athBTC, *downFromAth), nil
+		*ticker.Name, *athDate, *athUSD, *athBTC, *downFromAth), nil
 }
 
 func commandSupply(argument string) (string, error) {
@@ -237,7 +237,7 @@ func commandSupply(argument string) (string, error) {
 		return "", errors.Wrap(err, "command /s")
 	}
 
-	if ticker.Symbol == nil || ticker.MaxSupply == nil || ticker.TotalSupply == nil  || ticker.CirculatingSupply == nil || ticker.Symbol == nil {
+	if ticker.Name == nil || ticker.MaxSupply == nil || ticker.TotalSupply == nil  || ticker.CirculatingSupply == nil || ticker.Symbol == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /s")
 	}
 
@@ -245,7 +245,7 @@ func commandSupply(argument string) (string, error) {
 		max supply: %d %s
 		total supply: %d %s
 		circulating supply: %d %s`,
-		*ticker.Symbol, *ticker.MaxSupply, *ticker.Symbol, *ticker.TotalSupply, *ticker.Symbol, *ticker.CirculatingSupply, *ticker.Symbol), nil
+		*ticker.Name, *ticker.MaxSupply, *ticker.Symbol, *ticker.TotalSupply, *ticker.Symbol, *ticker.CirculatingSupply, *ticker.Symbol), nil
 }
 /*
 func commandMarkets(argument string) (string, error) {
@@ -278,7 +278,7 @@ func commandPriceChange(argument string) (string, error) {
 	priceChange7d := ticker.Quotes["USD"].PercentChange7d
 	priceChange30d := ticker.Quotes["USD"].PercentChange30d
 	priceChange1y := ticker.Quotes["USD"].PercentChange1y
-	if ticker.Symbol == nil || priceChange1h == nil || priceChange12h == nil || priceChange24h == nil {
+	if ticker.Name == nil || priceChange1h == nil || priceChange12h == nil || priceChange24h == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /c")
 	}
 
@@ -289,7 +289,7 @@ func commandPriceChange(argument string) (string, error) {
 		 7d change: %.2f "%"
 		 30d change: %.2f "%"
 		 1y change: %.2f "%"`,
-		 *ticker.Symbol, *priceChange1h, *priceChange12h, *priceChange24h, *priceChange7d, *priceChange30d, *priceChange1y), nil
+		 *ticker.Name, *priceChange1h, *priceChange12h, *priceChange24h, *priceChange7d, *priceChange30d, *priceChange1y), nil
 }
 /*
 func commandVolume(argument string) (string, error) {
