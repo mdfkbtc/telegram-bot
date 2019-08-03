@@ -179,12 +179,12 @@ func commandPrice(argument string) (string, error) {
 	return fmt.Sprintf(`%s price:
 		 %.4f USD
 		 %.8f BTC
-	  %s marketcap:
+	%s marketcap:
 		 %.f USD
 		 %.f BTC
-	  %s volume:
+	%s volume:
 		 %.f USD
-		http://coinpaprika.com/coin/%s`,
+  http://coinpaprika.com/coin/%s`,
 		*ticker.Name, *priceUSD, *priceBTC, *ticker.Symbol, *marketCapUSD, *marketCapBTC, *ticker.Symbol, *volumeUSD, *ticker.ID), nil
 }
 /*
@@ -222,11 +222,11 @@ func commandAthPrice(argument string) (string, error) {
 	}
 
 	return fmt.Sprintf(`%s ATH info:
-		%s
 		 %.4f USD
 		 %.8f BTC
-		Down since ATH %.2f %%`,
-		*ticker.Name, *athDate, *athUSD, *athBTC, *downFromAth), nil
+	%s
+	Down since ATH %.2f %%`,
+		*ticker.Name, *athUSD, *athBTC, *athDate, *downFromAth), nil
 }
 
 func commandSupply(argument string) (string, error) {
@@ -244,7 +244,7 @@ func commandSupply(argument string) (string, error) {
 	return fmt.Sprintf(`%s supply info:
 		max supply: %d %s
 		total supply: %d %s
-		circulating supply: %d %s`,
+		circ. supply: %d %s`,
 		*ticker.Name, *ticker.MaxSupply, *ticker.Symbol, *ticker.TotalSupply, *ticker.Symbol, *ticker.CirculatingSupply, *ticker.Symbol), nil
 }
 /*
@@ -283,12 +283,12 @@ func commandPriceChange(argument string) (string, error) {
 	}
 
 	return fmt.Sprintf(`%s price change:
-		 1h change: %.2f %%
-		 12h change: %.2f %%
-		 24h change: %.2f %%
-		 7d change: %.2f %%
-		 30d change: %.2f %%
-		 1y change: %.2f %%`,
+		 1h %.2f %%
+		 12h %.2f %%
+		 24h %.2f %%
+		 7d %.2f %%
+		 30d %.2f %%
+		 1y %.2f %%`,
 		 *ticker.Name, *priceChange1h, *priceChange12h, *priceChange24h, *priceChange7d, *priceChange30d, *priceChange1y), nil
 }
 /*
