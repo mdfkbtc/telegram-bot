@@ -176,16 +176,16 @@ func commandPrice(argument string) (string, error) {
 		return "", errors.Wrap(errors.New("missing data"), "command /p")
 	}
 
-	return fmt.Sprintf(`%s price:`
-		`%.4f USD`
-		`%.8f BTC`
-	`%s marketcap:`
-		`%.f USD`
-		`%.f BTC`
-	`%s volume:`
-		`%.f USD`
-		`http://coinpaprika.com/coin/%s`
-		, *ticker.Symbol, *priceUSD, *priceBTC, *ticker.Symbol, *marketCapUSD, *marketCapBTC, *ticker.Symbol, *volumeUSD), nil
+	return fmt.Sprintf(`%s price:
+		 %.4f USD
+		 %.8f BTC
+	  %s marketcap:
+		 %.f USD
+		 %.f BTC
+	  %s volume:
+		 %.f USD
+		http://coinpaprika.com/coin/%s`,
+		*ticker.Symbol, *priceUSD, *priceBTC, *ticker.Symbol, *marketCapUSD, *marketCapBTC, *ticker.Symbol, *volumeUSD, *ticker.ID), nil
 }
 /*
 func commandMarketCap(argument string) (string, error) {
@@ -221,12 +221,12 @@ func commandAthPrice(argument string) (string, error) {
 		return "", errors.Wrap(errors.New("missing data"), "command /a")
 	}
 
-	return fmt.Sprintf(`%s ATH info:`
-		` %s `
-		`%.4f USD`
-		`%.8f BTC`
-		`Down since ATH %.2f "%"`,
-		 *ticker.Symbol, *athDate, *athUSD, *athBTC, *downFromAth), nil
+	return fmt.Sprintf(`%s ATH info:
+		 %s
+		 %.4f USD
+		 %.8f BTC
+		Down since ATH %.2f "%"`,
+		*ticker.Symbol, *athDate, *athUSD, *athBTC, *downFromAth), nil
 }
 
 func commandSupply(argument string) (string, error) {
@@ -237,12 +237,15 @@ func commandSupply(argument string) (string, error) {
 		return "", errors.Wrap(err, "command /s")
 	}
 
-	if ticker.Name == nil || ticker.MaxSupply == nil || ticker.TotalSupply == nil  || ticker.CirculatingSupply == nil || ticker.Symbol == nil {
+	if ticker.Symbol == nil || ticker.MaxSupply == nil || ticker.TotalSupply == nil  || ticker.CirculatingSupply == nil || ticker.Symbol == nil {
 		return "", errors.Wrap(errors.New("missing data"), "command /s")
 	}
 
-	return fmt.Sprintf("%s supply information \n max supply: %d %s\n total supply: %d %s\n circulating supply: %d %s",
-		*ticker.Name, *ticker.MaxSupply, *ticker.Symbol, *ticker.TotalSupply, *ticker.Symbol, *ticker.CirculatingSupply, *ticker.Symbol), nil
+	return fmt.Sprintf(`%s supply info:
+		max supply: %d %s
+		total supply: %d %s
+		circulating supply: %d %s`,
+		*ticker.Symbol, *ticker.MaxSupply, *ticker.Symbol, *ticker.TotalSupply, *ticker.Symbol, *ticker.CirculatingSupply, *ticker.Symbol), nil
 }
 /*
 func commandMarkets(argument string) (string, error) {
