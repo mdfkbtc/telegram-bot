@@ -49,6 +49,41 @@ func (suite *RunTestSuite) TestCommandPrice() {
 	}
 }
 
+func (suite *RunTestSuite) TestCommandAthPrice() {
+	tests := map[string]struct {
+		contains string
+		error    bool
+	}{
+		"btc": {
+			contains: "Bitcoin",
+			error:    false,
+		},
+		"Bitcoin": {
+			contains: "Bitcoin",
+			error:    false,
+		},
+		"Invalid_coin": {
+			contains: "",
+			error:    true,
+		},
+	}
+
+	for s, r := range tests {
+		result, err := commandAthPrice(s)
+
+		if !r.error {
+			suite.NoError(err)
+		} else {
+			suite.Error(err)
+		}
+
+		if r.contains != "" {
+			suite.Contains(result, r.contains)
+		}
+	}
+}
+
+
 func (suite *RunTestSuite) TestCommandSupply() {
 	tests := map[string]struct {
 		error bool
@@ -83,6 +118,40 @@ func (suite *RunTestSuite) TestCommandSupply() {
 	}
 }
 
+func (suite *RunTestSuite) TestCommandPriceChange() {
+	tests := map[string]struct {
+		contains string
+		error    bool
+	}{
+		"btc": {
+			contains: "Bitcoin",
+			error:    false,
+		},
+		"Bitcoin": {
+			contains: "Bitcoin",
+			error:    false,
+		},
+		"Invalid_coin": {
+			contains: "",
+			error:    true,
+		},
+	}
+
+	for s, r := range tests {
+		result, err := commandPriceChange(s)
+
+		if !r.error {
+			suite.NoError(err)
+		} else {
+			suite.Error(err)
+		}
+
+		if r.contains != "" {
+			suite.Contains(result, r.contains)
+		}
+	}
+}
+/*
 func (suite *RunTestSuite) TestCommandVolume() {
 	tests := map[string]struct {
 		error bool
@@ -115,6 +184,7 @@ func (suite *RunTestSuite) TestCommandVolume() {
 			suite.Error(err)
 		}
 	}
+*/
 }
 
 func TestRunTestSuite(t *testing.T) {
