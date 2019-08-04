@@ -184,8 +184,8 @@ func (suite *RunTestSuite) TestCommandVolume() {
 			suite.Error(err)
 		}
 	}
-*/
 }
+*/
 
 func TestRunTestSuite(t *testing.T) {
 	suite.Run(t, new(RunTestSuite))
