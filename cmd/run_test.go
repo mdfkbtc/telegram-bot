@@ -54,12 +54,12 @@ func (suite *RunTestSuite) TestCommandAthPrice() {
 		contains string
 		error    bool
 	}{
-		"btc": {
-			contains: "Bitcoin",
+		"vls": {
+			contains: "Veles",
 			error:    false,
 		},
-		"Bitcoin": {
-			contains: "Bitcoin",
+		"Veles": {
+			contains: "Veles",
 			error:    false,
 		},
 		"Invalid_coin": {
